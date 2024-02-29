@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>360-degree video</title>
+  <script src="../js/aframe-v1.2.0.min.js"></script>
+</head>
+<body>
+<a-scene>
+  <a-assets>
+
+    <video id="video" src="../mov/fashion.MP4" preload="auto" muted></video>
+  </a-assets>
+
+
+
+
+
+  <a-text value="停止"
+  position="-1 1.3 -2"
+  font="../font/custom-msdf.json"
+  font-image="../font/custom-msdf.png"
+  negate="false"
+  align="center"
+  width="7.5"
+  color="red">
+  </a-text>
+
+
+  <a-text value="再生"
+  position="0 1.3 -2"
+  font="../font/custom-msdf.json"
+  font-image="../font/custom-msdf.png"
+  negate="false"
+  align="center"
+  width="7.5"
+  color="blue">
+  </a-text>
+
+  <a-text value="戻る"
+  position="1 1.3 -2"
+  font="../font/custom-msdf.json"
+  font-image="../font/custom-msdf.png"
+  negate="false"
+  align="center"
+  width="7.5"
+  color="yellow">
+  </a-text>
+
+  <a-videosphere src="#video" rotation="0 -65 0"></a-videosphere>
+  <!-- Play/Stop button for when autoplay doesn't work for a video -->
+  <a-box id="play" position="0 1 -2" scale="0.2 0.2 0.2" color="blue"></a-box>
+  <a-box id="stop" position="-1 1 -2" scale="0.2 0.2 0.2" color="red"></a-box>
+
+  
+  <!-- TODO3-1:box for link -->
+  <a-box id="link" position="1 1 -2" scale="0.2 0.2 0.2" color="yellow" linkbox></a-box>
+
+  <!-- Eye cursor for pressing the play/stop button -->
+  <a-camera>
+    <a-cursor fuse="true" fuse-timeout="1000"></a-cursor>
+  </a-camera>
+  
+</a-scene>
+
+<!-- JavaScript for playing and stopping videos -->
+<script>
+const video = document.getElementById("video");   // Getting video
+const btnPlay = document.getElementById("play");  // Getting the Play button
+btnPlay.addEventListener("click", (e) => {        // If it is clicked
+  video.play();                                   // Play the video
+});
+const btnStop = document.getElementById("stop");  // Getting the Stop Button
+btnStop.addEventListener("click", (e) => {        // If it is clicked
+  video.pause();                                  // Stop the video
+});
+</script>
+
+
+<!-- TODO3-2:box for link -->
+<script>
+  function toLink(){
+    window.location.href = "./index.html"
+  }
+
+  AFRAME.registerComponent('linkbox', {
+    init: function () {  
+      console.log(this);
+      const element = this.el;
+      element.addEventListener('mouseenter', function () {//Click with your eyes instead of the mouse
+        console.log('mouseenter');
+        setTimeout(toLink, 2000); //Execute the toLink function
+        
+      });
+    }
+  });
+
+</script>
+
+</body>
+</html>
